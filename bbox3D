@@ -1,0 +1,51 @@
+import numpy as np
+import cv2
+from scipy.spatial.transform import Rotation as R
+from filterpy.kalman import KalmanFilter
+from collections import defaultdict
+import math
+
+# Default camera intrinsic matrix (can be overridden)
+DEFAULT_K =np.array([
+    [718.856, 0.0, 607.1928],
+    [0.0, 718.856, 185.2157],
+    [0.0, 0.0, 1.0]
+])
+
+# Default camera projection matrix (can be overridden)
+DEFAULT_P = np.array([
+    [718.856, 0.0, 607.1928, 45.38225],
+    [0.0, 718.856, 185.2157, -0.1130887],
+    [0.0, 0.0, 1.0, 0.003779761]
+])
+
+
+# Real-time Object-aware Monocular Depth Estimation in Onboard Systems
+
+class bbox3D:
+    """
+    3D bounding box estimation from 2D detections and depth
+    """
+    def __init__(self, camera_matrix=None, projection_matrix=None, class_dims=None):
+        """
+        Initialize the 3D bounding box estimator
+
+        Args:
+            camera_matrix (numpy.ndarray): Camera intrinsic matrix (3x3)
+            projection matrix (numpy.ndarray): Camera projection matrix (3x4)
+            class_dims (dict): Dictionary mapping class names to dimensions (height, width, length)
+        """
+        self.K = camera_matrix if camera_matrix is not None else DEFAULT_K
+        self.P = projection_matrix if projection_matrix is not None else DEFAULT_P
+        self.dims = class_dims if class_dims is not None else DEFAULT_DIMS
+
+        # Initialize Kalman filters for tracking 3D boxes
+        self.kf_trackers = {}
+
+        # Store history of 3D boxes for filtering
+        self.box_history = defaultdict(list)
+        self.max_history = 5
+    
+    def 
+
+
